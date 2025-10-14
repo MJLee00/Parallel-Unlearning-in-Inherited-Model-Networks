@@ -1,0 +1,44 @@
+name: classification
+
+data:
+  data_root: data/yahoo
+  dataset: YAHOO
+  batch_size: 64
+  num_workers: 1
+
+# model for data
+model:
+  #_target_: models.lstm.LSTMModel 
+ # _target_: models.gcnn.GCNN  
+  _target_: models.bert.Bert
+  num_classes: 10
+
+# optimizer for training task model
+optimizer:
+  _target_: torch.optim.Adam
+  #lr: 0.001   # GCNN
+  #lr: 0.01  
+  lr: 2e-5 # bert
+# lr scheduler for training task optimizer
+lr_scheduler:
+  _target_: torch.optim.lr_scheduler.MultiStepLR
+  milestones: [60, 120, 160, 200]
+  gamma: 0.0002
+
+epoch: 15
+save_num_model: 15
+#train_layer: ['layer4.0.conv2.weight']
+#train_layer : ['fc.weight','fc.bias']
+#train_layer: ['resnet18.fc.weight','resnet18.fc.bias']
+#train_layer: ['classifier.6.weight', 'classifier.6.bias']  
+#train_layer: ['vgg.classifier.6.weight', 'vgg.classifier.6.bias'] 
+#train_layer: ['densenet161.classifier.weight', 'densenet161.classifier.bias'] 
+#train_layer: ['output_linear2.weight','output_linear2.bias']
+#train_layer: ['model.classifier.weight', 'model.classifier.bias']
+#train_layer: ['layer4.0.conv2.weight','linear.weight','linear.bias','layer4.1.bn1.weight', 'layer4.1.bn1.bias', 'layer4.1.bn2.bias', 'layer4.1.bn2.weight']
+train_layer: 'all'
+# parameter data root
+param:
+  data_root: param_data/yahoo/data.pt
+  k: 200
+  num_workers: 4

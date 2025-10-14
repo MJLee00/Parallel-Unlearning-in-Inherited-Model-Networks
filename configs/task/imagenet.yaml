@@ -1,0 +1,54 @@
+name: classification
+
+data:
+  data_root: data/imagenet
+  dataset: imagenet
+  batch_size: 64
+  num_workers: 1
+
+# model for data
+model:
+  #_target_: models.alexnet.AlexNet
+  #_target_: models.resnet.ResNet18 # t=100比较好
+  #_target_: models.vgg16.VGG16  #vgg t=300比较好
+  #_target_: models.densenet.DenseNet  #vgg t=300比较好
+  _target_: models.vit.VIT  #vgg t=300比较好
+  num_classes: 1000
+
+# optimizer for training task model
+optimizer:
+  _target_: torch.optim.SGD
+  #lr: 0.001  # vgg16
+  #lr: 0.01 #alexnet
+  lr: 0.1 # resnet
+  momentum: 0.9
+  weight_decay: 0.0005
+
+# lr scheduler for training task optimizer
+lr_scheduler:
+  _target_: torch.optim.lr_scheduler.MultiStepLR
+  milestones: [60, 120, 160, 200]
+  gamma: 0.2
+
+epoch: 50
+save_num_model: 50
+#train_layer: ['layer4.0.conv2.weight']
+# train_layer: ['resnet18.layer4.0.downsample.0.weight','resnet18.layer4.0.downsample.1.weight','resnet18.layer4.0.downsample.1.bias','resnet18.layer4.1.conv1.weight',
+# 'resnet18.layer4.1.bn1.bias','resnet18.layer4.1.bn1.weight','resnet18.layer4.1.conv2.weight','resnet18.layer4.1.bn2.bias', 'resnet18.layer4.1.bn2.bias',
+#   'resnet18.fc.weight','resnet18.fc.bias']
+train_layer: ['resnet18.fc.weight','resnet18.fc.bias']
+#train_layer: ['classifier.6.weight', 'classifier.6.bias']  
+#train_layer: ['classifier.6.weight', 'classifier.6.bias', 'classifier.4.bias','classifier.4.weight',
+#  'classifier.1.weight','classifier.1.bias','features.10.weight','features.10.bias']  
+#train_layer: ['vgg.classifier.6.weight', 'vgg.classifier.6.bias'] 
+#train_layer: ['densenet161.classifier.weight', 'densenet161.classifier.bias'] 
+#train_layer: ['model.heads.head.weight', 'model.heads.head.bias']
+# train_layer: ['densenet161.features.denseblock4.denselayer24.conv1.weight','densenet161.features.denseblock4.denselayer24.conv1.bias','densenet161.features.denseblock4.denselayer24.conv2.weight','densenet161.features.denseblock4.denselayer24.conv2.bias','densenet161.features.norm5.bias','densenet161.features.norm5.weight',
+#   'densenet161.classifier.weight', 'densenet161.classifier.bias'] 
+#train_layer: ['layer4.0.conv2.weight','linear.weight','linear.bias','layer4.1.bn1.weight', 'layer4.1.bn1.bias', 'layer4.1.bn2.bias', 'layer4.1.bn2.weight']
+#train_layer: 'all'
+# parameter data root
+param:
+  data_root: param_data/imagenet/data.pt
+  k: 200
+  num_workers: 4
