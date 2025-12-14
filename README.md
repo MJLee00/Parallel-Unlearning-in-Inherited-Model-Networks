@@ -1,6 +1,6 @@
 # Parallel Unlearning in Inherited Model Networks
 
-This repository contains the official implementation of the **Parallel Unlearning in Inherited Model Networks** framework described in the paper *“Fishers Harvest Parallel Unlearning in Inherited Model Networks”* (arXiv:2408.08493). :contentReference[oaicite:0]{index=0}
+This repository contains the official implementation of the **Parallel Unlearning in Inherited Model Networks** framework described in the paper *Parallel Unlearning in Inherited Model Networks”*[https://arxiv.org/pdf/2408.08493]
 
 Machine unlearning aims to remove the influence of specific training data from trained models **as if the data were never seen**, while preserving performance on the remaining data. In inheritance-oriented model networks (e.g., federated learning, incremental learning, transfer learning), unlearning is especially challenging due to complex model dependencies. :contentReference[oaicite:1]{index=1}
 
